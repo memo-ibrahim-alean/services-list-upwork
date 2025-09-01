@@ -1584,7 +1584,6 @@ body.theme-dark .search-bar.enhanced .clear-btn:hover {
   align-items: center;
   background: transparent;
   border: none;
-  cursor: pointer;
   color: var(--color-text-faint);
   font-size: 0.65rem;
   font-weight: 600;
@@ -1618,9 +1617,9 @@ body.theme-dark .search-bar.enhanced .clear-btn:hover {
   border-color: var(--brand-accent);
   color: #fff;
 }
-.wiz-node:hover:not(.active):not(.done) .wiz-index {
+/* .wiz-node:hover:not(.active):not(.done) .wiz-index {
   border-color: var(--brand);
-}
+} */
 .wiz-bar {
   position: absolute;
   left: 0;

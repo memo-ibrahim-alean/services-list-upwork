@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { servicesLarge as servicesData } from "../data/servicesLarge.js"; // or servicesData if you prefer the small set
+import { servicesLarge as servicesData } from "../data/servicesLarge.js";
 import { flattenSubgroups, findSubgroup, groupsForTypes } from "../data/taxonomyUtils.js";
 import { usePersistentState } from "../hooks/usePersistentState.js";
 
@@ -12,6 +12,12 @@ import ServiceList from "../components/ServiceList.jsx";
 import SearchBar from "../components/SearchBar.jsx";
 import SortSelect from "../components/SortSelect.jsx";
 import FiltersPanel from "../components/FiltersPanel.jsx";
+
+const LABELS = {
+  step1: "Category",
+  step2: "Specification",
+  step3: "Services"
+};
 
 export default function Browse() {
   const [wizardMode, setWizardMode] = usePersistentState("wizard_mode", true);
@@ -105,7 +111,7 @@ export default function Browse() {
           onChangeLocation={() => {}}
           resultsText={`${filtered.length} / ${servicesData.length}`}
         >
-          {/* Placeholder for future location or other filters */}
+          {/* Future filters */}
         </FiltersPanel>
 
         <ServiceList services={filtered} highlight={search} loading={loading} />
@@ -143,18 +149,20 @@ export default function Browse() {
             setSubgroupId("");
           }}
           b2bEnabled={b2bEnabled}
+          // Make sure inside this component any visible text says "Category"
         />
       )}
 
       {step === 2 && (
         <StepSubgroup
           groupId={groupId}
-          current={subgroupId}
+            current={subgroupId}
           onSelect={(id) => setSubgroupId(id)}
           onBack={() => {
             setGroupId("");
             setSubgroupId("");
           }}
+          // Ensure labels inside are changed to "Specification"
         />
       )}
 
@@ -175,15 +183,17 @@ export default function Browse() {
           onBackSubgroup={() => setSubgroupId("")}
           onResetWizard={resetAll}
           loading={loading}
+          // Update heading / labels inside to "Services"
         />
       )}
     </section>
   );
 }
 
+// FIXED: simpler & correct step logic
 function determineStep({ groupId, subgroupId }) {
   if (!groupId) return 1;
-  if (!subgroupId && subgroupId !== "") return 2;
+  if (!subgroupId) return 2;
   return 3;
 }
 
@@ -202,7 +212,7 @@ function sortServices(list, mode) {
     case "name-desc":
       copy.sort((a, b) => b.name.localeCompare(a.name));
       break;
-    case "category":
+    case "category": // (This still sorts by subgroup/category id)
       copy.sort((a, b) => a.subgroupId.localeCompare(b.subgroupId));
       break;
     default:
@@ -211,18 +221,20 @@ function sortServices(list, mode) {
   return copy;
 }
 
+// Progress display (non-clickable)
 function WizardProgress({ step }) {
   const steps = [
-    { n: 1, label: "Group" },
-    { n: 2, label: "Subgroup" },
-    { n: 3, label: "Refine" }
+    { n: 1, label: LABELS.step1 },
+    { n: 2, label: LABELS.step2 },
+    { n: 3, label: LABELS.step3 }
   ];
   return (
-    <div className="wizard-progress">
+    <div className="wizard-progress" aria-label="Progress">
       {steps.map(s => (
         <div
           key={s.n}
           className={`wiz-node ${step === s.n ? "active" : step > s.n ? "done" : ""}`}
+          aria-current={step === s.n ? "step" : undefined}
         >
           <span className="wiz-index">{s.n}</span>
           <span className="wiz-label">{s.label}</span>
