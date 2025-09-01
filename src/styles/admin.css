@@ -31,7 +31,7 @@
   letter-spacing: .5px;
   padding: .5rem .7rem;
   border-radius: .4rem;
-  transition: background .15s;
+  transition: background .15s, color .15s;
 }
 .a-nav:hover {
   background: rgba(255,255,255,.06);
@@ -149,6 +149,7 @@
   font-size: .7rem;
   background: #fff;
   min-width: 130px;
+  color: #0f172a;
 }
 .adm-input:focus {
   outline: 2px solid #2563eb;
@@ -264,6 +265,7 @@
   font-size: .7rem;
   resize: vertical;
   background: #fff;
+  color: #0f172a;
 }
 .modal-form input:focus,
 .modal-form select:focus,
@@ -382,3 +384,127 @@
     margin-left: auto;
   }
 }
+
+/* -----------------------------------------------------------------
+   DARK MODE SUPPORT
+   Uses system preference (prefers-color-scheme: dark)
+   Relies on global.css tokens, but we override hard-coded colors.
+------------------------------------------------------------------ */
+@media (prefers-color-scheme: dark) {
+  .admin-main {
+    background: var(--color-bg);
+  }
+  .adm-stat-card,
+  .panel,
+  .adm-table-wrap,
+  .modal,
+  .audit-row {
+    background: var(--color-surface);
+    border-color: var(--color-border);
+  }
+  .adm-stat-card .stat-value,
+  .adm-title,
+  .cell-strong {
+    color: var(--color-text);
+  }
+  .adm-stat-card .stat-label,
+  .table-meta,
+  .audit-meta,
+  .adm-stat-card .stat-sub,
+  .recent-list li {
+    color: var(--color-text-faint);
+  }
+  .recent-list li {
+    background: var(--color-bg-alt);
+  }
+  .adm-input {
+    background: var(--color-surface);
+    border-color: var(--color-border);
+    color: var(--color-text);
+  }
+  .adm-input:focus {
+    outline: 2px solid var(--brand);
+    border-color: var(--brand);
+  }
+  .adm-table th {
+    background: var(--color-bg-alt);
+    color: var(--color-text-faint);
+    border-color: var(--color-border);
+  }
+  .adm-table td {
+    border-top: 1px solid var(--color-border);
+    color: var(--color-text);
+    background: var(--color-surface);
+  }
+  .adm-table tbody tr:hover {
+    background: var(--color-bg-alt);
+  }
+  .modal-form label {
+    color: var(--color-text-faint);
+  }
+  .modal,
+  .modal-form input,
+  .modal-form select,
+  .modal-form textarea {
+    background: var(--color-surface);
+    color: var(--color-text);
+    border-color: var(--color-border);
+  }
+  .audit-row {
+    background: var(--color-surface);
+  }
+  .toast {
+    background: var(--color-surface);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+  }
+  .toast-info { background: var(--color-info); color: #fff; }
+  .toast-success { background: var(--color-success); color: #fff; }
+  .toast-error { background: var(--color-danger); color: #fff; }
+
+  /* Active nav and hover still readable */
+  .a-nav {
+    color: #cbd5e1;
+  }
+  .a-nav:hover {
+    background: rgba(255,255,255,0.08);
+  }
+  .a-nav.active {
+    background: var(--brand);
+    color: #fff;
+  }
+
+  /* Badges – keep vivid contrast */
+  .badge.sm {
+    background: #475569;
+    color: #fff;
+  }
+  .badge.sm.b2c { background: var(--color-info); }
+  .badge.sm.b2b { background: #7c3aed; }
+  .badge.sm.action-create { background: var(--color-success); }
+  .badge.sm.action-update { background: var(--color-info); }
+  .badge.sm.action-delete { background: var(--color-danger); }
+
+  /* Scrollbar (optional) */
+  .admin-main::-webkit-scrollbar {
+    width: 10px;
+  }
+  .admin-main::-webkit-scrollbar-thumb {
+    background: var(--brand);
+    border-radius: 6px;
+  }
+}
+
+/* Optional explicit class-based dark theme support (if you toggle body.theme-dark) */
+body.theme-dark .admin-main {
+  background: var(--color-bg);
+}
+body.theme-dark .adm-stat-card,
+body.theme-dark .panel,
+body.theme-dark .adm-table-wrap,
+body.theme-dark .modal,
+body.theme-dark .audit-row {
+  background: var(--color-surface);
+  border-color: var(--color-border);
+}
+/* (You can duplicate the rest of the @media dark overrides under body.theme-dark if you also support manual toggle.) */

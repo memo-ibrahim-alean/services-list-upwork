@@ -1617,9 +1617,6 @@ body.theme-dark .search-bar.enhanced .clear-btn:hover {
   border-color: var(--brand-accent);
   color: #fff;
 }
-/* .wiz-node:hover:not(.active):not(.done) .wiz-index {
-  border-color: var(--brand);
-} */
 .wiz-bar {
   position: absolute;
   left: 0;
@@ -2220,6 +2217,29 @@ body.theme-dark .cat-card.active {
   color: var(--color-text-faint);
   margin-top: -0.4rem;
 }
+
+/* Dark overrides for minimalist header (system) */
+@media (prefers-color-scheme: dark) {
+  .site-header.minimalist {
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text);
+  }
+  .site-header.minimalist .logo-text {
+    color: var(--color-text-soft);
+  }
+}
+
+/* Dark overrides for minimalist header (manual class) */
+body.theme-dark .site-header.minimalist {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+body.theme-dark .site-header.minimalist .logo-text {
+  color: var(--color-text-soft);
+}
+
 /* =========================================================
    END FILE
    ========================================================= */
